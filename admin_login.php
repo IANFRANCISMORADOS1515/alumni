@@ -246,7 +246,7 @@ if ($_POST) {
                 <img src="default/logo.png" alt="SCI Logo" onerror="this.style.display='none'">
             </div>
             <h3 class="mb-2">Sandigan Colleges Incorporated</h3>
-            <p class="mb-0 opacity-75">Students Portal Login</p>
+            <p class="mb-0 opacity-75">Studentss Portal Login</p>
         </div>
         <div class="login-body">
             <?php if ($error): ?>
