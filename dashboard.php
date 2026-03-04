@@ -38,8 +38,6 @@ $college_stats = fetchAll("
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>SCI Alumni System - Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
- 
-    
      
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -73,11 +71,10 @@ $college_stats = fetchAll("
         <div class="main-panel">
             <div class="main-header">
               
-   <?php include("include/main-header.php"); ?>  
-<?php include("include/navbar.php"); ?>
-                
+            <?php include("include/main-header.php"); ?>  
+            <?php include("include/navbar.php"); ?>
+        
             </div>
-
             <div class="container">
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -91,7 +88,6 @@ $college_stats = fetchAll("
                         </div>
                     </div>
 
-                     
                     <div class="row">
                         <div class="col-sm-6 col-md-3">
                             <div class="card card-stats card-round">
@@ -228,7 +224,6 @@ $college_stats = fetchAll("
                                 </div>
                             </div>
                         </div>
-
                         
                         <div class="col-md-4">
                             <div class="card card-round">
@@ -253,8 +248,7 @@ $college_stats = fetchAll("
                     </div>
                 </div>
             </div>
-
-<?php include("include/footer.php"); ?>
+            <?php include("include/footer.php"); ?>
         </div>
     </div>
 

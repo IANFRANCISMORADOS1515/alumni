@@ -47,263 +47,173 @@ if ($_POST) {
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="style/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-       <link rel="icon" href="default/logo.png" type="image/x-icon" />
-    
+    <link rel="icon" href="default/logo.png" type="image/x-icon" />
     <style>
         body {
-            background:url('default/sample_school.jpg') center/cover no-repeat;
+            background: #f4f7fb;
+        }
+        .hero-section.login-hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        /* Fallback background if image doesn't load */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-        }
-        
-        .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            overflow: hidden;
-            width: 100%;
-            max-width: 420px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .login-header {
-            background: linear-gradient(135deg, #1572e8 0%, #0d5cb5 100%);
+            background: linear-gradient(135deg, rgba(5, 90, 46, 0.85), rgba(10, 150, 57, 0.9)),
+                        url('default/sample_school.jpg') center/cover no-repeat;
             color: white;
-            padding: 35px 30px;
-            text-align: center;
             position: relative;
+            overflow: hidden;
+            padding-top: 60px;
+            padding-bottom: 60px;
         }
-        
-        .school-logo {
-            width: 80px;
-            height: 80px;
-            background: white;
+        .hero-section.login-hero::after {
+            background: url('default/logo.png') center/60% no-repeat;
+            opacity: 0.08;
+        }
+        .login-panel {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(5, 90, 46, 0.35);
+            border: 1px solid rgba(5, 90, 46, 0.15);
+            overflow: hidden;
+        }
+        .login-panel .content-card {
+            margin: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+        .login-panel .form-control {
+            border-radius: 12px;
+            border: 1px solid #dfe3ea;
+            padding: 14px;
+            transition: border-color 0.3s ease;
+        }
+        .login-panel .form-control:focus {
+            border-color: #1572e8;
+            box-shadow: 0 0 0 0.2rem rgba(21, 114, 232, 0.25);
+        }
+        .login-panel .btn-login {
+            width: 100%;
+        }
+        .login-panel .login-heading {
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #6c757d;
+        }
+        .login-panel .school-logo {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            background: #fff;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
-        
-        .school-logo img {
+        .login-panel .school-logo img {
             width: 60px;
             height: 60px;
             object-fit: contain;
         }
-        
-        /* Placeholder logo if image doesn't load */
-        .school-logo::before {
-            content: 'SCI';
-            font-weight: bold;
-            font-size: 18px;
-            color: #1572e8;
-            position: absolute;
-        }
-        
-        .school-logo img {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .login-body {
-            padding: 35px 30px;
-        }
-        
-        .form-control {
-            border-radius: 12px;
-            border: 2px solid #e9ecef;
-            padding: 14px 15px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            border-color: #1572e8;
-            box-shadow: 0 0 0 0.2rem rgba(21, 114, 232, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        .password-container {
-            position: relative;
-        }
-        
         .password-toggle {
-            position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             color: #6c757d;
-            cursor: pointer;
-            padding: 5px;
             font-size: 16px;
-            transition: color 0.3s ease;
         }
-        
-        .password-toggle:hover {
-            color: #1572e8;
-        }
-        
-        .password-toggle:focus {
-            outline: none;
-        }
-        
-        .btn-login {
-            background: linear-gradient(135deg, #1572e8 0%, #0d5cb5 100%);
-            border: none;
-            border-radius: 12px;
-            padding: 14px;
-            font-weight: 600;
-            width: 100%;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(21, 114, 232, 0.3);
-        }
-        
-        .btn-login:hover {
-            background: linear-gradient(135deg, #0d5cb5 0%, #0a4d96 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(21, 114, 232, 0.4);
-        }
-        
-        .btn-login:active {
-            transform: translateY(0);
-        }
-        
-        .alert {
-            border-radius: 10px;
-            border: none;
-            padding: 12px 15px;
-        }
-        
-        .school-info {
-            background: rgba(21, 114, 232, 0.1);
-            border-radius: 10px;
-            padding: 15px;
+        .helper-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 12px;
             text-align: center;
-            color: #1572e8;
-            font-weight: 500;
-            margin-top: 20px;
         }
-        
-        .form-label {
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 8px;
+        .hero-section .section-title {
+            color: #fff;
         }
-        
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .login-card {
-                margin: 20px;
-                max-width: none;
-            }
-            
-            .login-header {
-                padding: 25px 20px;
-            }
-            
-            .login-body {
-                padding: 25px 20px;
-            }
-            
-            .school-logo {
-                width: 70px;
-                height: 70px;
-                margin-bottom: 15px;
-            }
-            
-            .school-logo img {
-                width: 50px;
-                height: 50px;
+        @media (max-width: 991px) {
+            .hero-section.login-hero {
+                padding: 40px 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <div class="login-header">
-            <div class="school-logo">
-                <img src="default/logo.png" alt="SCI Logo" onerror="this.style.display='none'">
-            </div>
-            <h3 class="mb-2">Sandigan Colleges Incorporated</h3>
-            <p class="mb-0 opacity-75">Studentss Portal Login</p>
-        </div>
-        <div class="login-body">
-            <?php if ($error): ?>
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    <?= htmlspecialchars($error) ?>
+    <section class="hero-section hero-watermark login-hero">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <span class="pill">ADMIN PORTAL</span>
+                    <h1 class="section-title mt-3 mb-3">Sandigan Colleges Incorporated</h1>
+                    <p class="lead-copy text-white-75 mb-4">Manage alumni data, announcements, and events with a secure administrative hub styled after the SCI brand.</p>
+                    <p class="text-white-50 mb-0">Last refreshed: March 4, 2026</p>
                 </div>
-            <?php endif; ?>
-            
-            <form method="POST" id="loginForm">
-                <div class="mb-3">
-                    <label class="form-label">
-                        <i class="fas fa-user me-1"></i>
-                        Username
-                    </label>
-                    <input type="text" 
-                           name="username" 
-                           class="form-control" 
-                           required 
-                           placeholder="Enter your username"
-                           value="<?= htmlspecialchars($_POST['username'] ?? '') ?>">
-                </div>
-                
-                <div class="mb-4">
-                    <label class="form-label">
-                        <i class="fas fa-lock me-1"></i>
-                        Password
-                    </label>
-                    <div class="password-container">
-                        <input type="password" 
-                               name="password" 
-                               id="password" 
-                               class="form-control" 
-                               required 
-                               placeholder="Enter your password">
-                        <button type="button" 
-                                class="password-toggle" 
-                                onclick="togglePassword()"
-                                aria-label="Toggle password visibility">
-                            <i class="fas fa-eye" id="toggleIcon"></i>
-                        </button>
+                <div class="col-lg-6">
+                    <div class="login-panel">
+                        <div class="content-card p-4">
+                            <div class="text-center">
+                                <div class="school-logo">
+                                    <img src="default/logo.png" alt="SCI Logo" onerror="this.style.display='none'">
+                                </div>
+                                <p class="login-heading">Administrator Login</p>
+                            </div>
+                            <?php if ($error): ?>
+                                <div class="alert alert-danger d-flex align-items-center">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <?= htmlspecialchars($error) ?>
+                                </div>
+                            <?php endif; ?>
+                            <form method="POST" id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">
+                                        <i class="fas fa-user me-1"></i>
+                                        Username
+                                    </label>
+                                    <input type="text"
+                                           id="username"
+                                           name="username"
+                                           class="form-control"
+                                           required
+                                           placeholder="Enter your username"
+                                           value="<?= htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : '') ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="password">
+                                        <i class="fas fa-lock me-1"></i>
+                                        Password
+                                    </label>
+                                    <div class="password-container position-relative">
+                                        <input type="password"
+                                               id="password"
+                                               name="password"
+                                               class="form-control"
+                                               required
+                                               placeholder="Enter your password">
+                                        <button type="button"
+                                                class="password-toggle position-absolute"
+                                                onclick="togglePassword()"
+                                                aria-label="Toggle password visibility">
+                                            <i class="fas fa-eye" id="toggleIcon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-login mt-2">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Login to Dashboard
+                                </button>
+                                <p class="helper-text mb-0">Need assistance? Email <strong>admin@sandigan.edu.ph</strong></p>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn btn-primary btn-login">
-                    <i class="fas fa-sign-in-alt me-2"></i>
-                    Login to Dashboard
-                </button>
-            </form>
-            
-            <div class="school-info">
-                <i class="fas fa-university me-2"></i>
-                <strong>Sandigan Colleges Incorporated</strong><br>
-                <small class="opacity-75">Alumni Management System</small>
             </div>
         </div>
-    </div>
+    </section>
 
     <script>
         function togglePassword() {
@@ -321,18 +231,15 @@ if ($_POST) {
             }
         }
 
-        // Add some interactive feedback
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function() {
             const submitBtn = document.querySelector('.btn-login');
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Logging in...';
             submitBtn.disabled = true;
         });
 
-        // Focus first empty field on load
         document.addEventListener('DOMContentLoaded', function() {
-            const usernameField = document.querySelector('input[name="username"]');
-            const passwordField = document.querySelector('input[name="password"]');
-            
+            const usernameField = document.getElementById('username');
+            const passwordField = document.getElementById('password');
             if (!usernameField.value) {
                 usernameField.focus();
             } else {

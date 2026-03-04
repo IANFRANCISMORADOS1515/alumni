@@ -187,6 +187,12 @@ function getDefaultImage($type, $image) {
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="style/main.css" />
+    <style>
+        .hero-section.hero-watermark::after {
+            background: url('/default/logo.png') center/contain no-repeat;
+            background-size: 55%;
+        }
+    </style>
 </head>
 <body>
     <?php include 'include_homepage/navbar.php'; ?>
@@ -483,4 +489,3 @@ function getDefaultImage($type, $image) {
     </script>
 </body>
 </html>
-

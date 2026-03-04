@@ -295,7 +295,6 @@ $batches = fetchAll("SELECT id, CONCAT(year, ' - ', semester, ' Semester') as di
                             </div>
                         </div>
                     </div>
-
                     
                     <div class="row">
                         <div class="col-md-12">

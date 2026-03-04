@@ -80,7 +80,10 @@ if (isset($_POST['action'])) {
                     $profile_picture
                 ];
 
-                $result = query("INSERT INTO alumni (student_id, first_name, middle_name, last_name, suffix, email, phone, birth_date, gender, civil_status, present_address, permanent_address, city, province, country, postal_code, college_id, program_id, batch_id, gpa, latin_honor, bio, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
+                $result = query("INSERT INTO alumni (student_id, first_name, middle_name, last_name, suffix, email, 
+                phone, birth_date, gender, civil_status, present_address, permanent_address, city, province, country, 
+                postal_code, college_id, program_id, batch_id, gpa, latin_honor, bio, profile_picture) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
                 
                 if ($result) {
                     echo json_encode(['success' => true, 'message' => 'Alumni added successfully']);
