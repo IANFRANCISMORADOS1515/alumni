@@ -29,200 +29,16 @@ $recent_highlights = fetchAll("
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-       <link rel="icon" href="default/logo.png" type="image/x-icon" />
-    
-    
-    <style>
-        .hero-section {
-            background: linear-gradient(rgba(21, 114, 232, 0.8), rgba(21, 114, 232, 0.8)), 
-                        url('/placeholder.svg?height=500&width=1200') center/cover;
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-weight: 700;
-            color: #333;
-        }
-        .stats-section {
-            background: #f8f9fa;
-            padding: 60px 0;
-        }
-        .stat-card {
-            text-align: center;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #1572e8;
-        }
-        .mission-vision-card {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            height: 100%;
-        }
-        .mission-vision-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #1572e8, #0d5ac3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 4px 12px rgba(21, 114, 232, 0.3);
-        }
-        .history-timeline {
-            position: relative;
-            padding: 20px 0;
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 30px;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            background: #1572e8;
-            border-radius: 50%;
-        }
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 24px;
-            top: 25px;
-            width: 2px;
-            height: calc(100% + 10px);
-            background: #e9ecef;
-        }
-        .timeline-item:last-child::after {
-            display: none;
-        }
-        .timeline-year {
-            font-weight: bold;
-            color: #1572e8;
-            font-size: 1.2rem;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(45deg, #1572e8, #0d5ac3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(21, 114, 232, 0.3);
-        }
-        .team-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-        .team-card:hover {
-            transform: translateY(-5px);
-        }
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            object-fit: cover;
-        }
-        .highlight-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-            margin-bottom: 30px;
-        }
-        .highlight-card:hover {
-            transform: translateY(-5px);
-        }
-        /* Enhanced icon styling */
-        .mission-vision-icon i,
-        .feature-icon i {
-            display: block;
-        }
-        /* Contact section icons */
-        .contact-icon {
-            color: #1572e8;
-            width: 20px;
-            text-align: center;
-        }
-    </style>
+    <link rel="icon" href="default/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style/main.css" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php" style="color:blue;">
-                &nbsp;&nbsp;<img src="default/logo.png" alt="SCI" height="40" class="me-2" onerror="this.src='/placeholder.svg?height=40&width=40'">
-                SCI Alumni
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="margin-right:10px;">
-                <span style="color:black;text-align:center;font-size:1rem;line-height:1rem;padding:10px;">&#9776;</span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php" style="color:black;">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="about.php" style="color:#1572e8;">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="admin_login.php">Admin Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'include_homepage/navbar.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-4 fw-bold mb-4">About Northern Iloilo State University</h1>
+            <h1 class="display-4 fw-bold mb-4">About Sandigan Colleges, Inc.</h1>
             <p class="lead mb-0">Excellence in Education, Innovation, and Service</p>
         </div>
     </section>
@@ -301,27 +117,27 @@ $recent_highlights = fetchAll("
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="section-title text-start">Our Rich History</h2>
+                    <h2 class="section-title text-start"></h2>
                     <div class="history-timeline">
                         <div class="timeline-item">
-                            <div class="timeline-year">1969</div>
-                            <h5>Foundation</h5>
-                            <p>Northern Iloilo State University was established as Northern Iloilo Polytechnic College through Republic Act No. 5635.</p>
+                            <div class="timeline-year"></div>
+                            <h5></h5>
+                            <p></p>
                         </div>
                         <div class="timeline-item">
-                            <div class="timeline-year">1998</div>
-                            <h5>University Status</h5>
-                            <p>Converted to university status through Republic Act No. 8596, becoming Northern Iloilo State University.</p>
+                            <div class="timeline-year"></div>
+                            <h5></h5>
+                            <p></p>
                         </div>
                         <div class="timeline-item">
-                            <div class="timeline-year">2010</div>
-                            <h5>Expansion</h5>
-                            <p>Established multiple satellite campuses to serve more communities across Northern Iloilo.</p>
+                            <div class="timeline-year"></div>
+                            <h5></h5>
+                            <p></p>
                         </div>
                         <div class="timeline-item">
-                            <div class="timeline-year">2020</div>
-                            <h5>Digital Transformation</h5>
-                            <p>Launched comprehensive digital learning platforms and modernized educational delivery systems.</p>
+                            <div class="timeline-year"></div>
+                            <h5></h5>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -450,11 +266,11 @@ $recent_highlights = fetchAll("
                 <div class="col-md-6 mb-4">
                     <div class="feature-card text-start">
                         <h5><i class="fas fa-map-marker-alt contact-icon me-2"></i>Main Campus</h5>
-                        <p>Northern Iloilo State University<br>
-                        Estancia, Iloilo, Philippines 5017</p>
+                        <p><br>
+                        </p>
                         
                         <h5 class="mt-4"><i class="fas fa-phone contact-icon me-2"></i>Contact Numbers</h5>
-                        <p>Phone: +63 (33) 331-9447<br>
+                        <p><br>
                         Mobile: +63 917-XXX-XXXX</p>
                         
                         <h5 class="mt-4"><i class="fas fa-envelope contact-icon me-2"></i>Email Address</h5>
@@ -487,41 +303,7 @@ $recent_highlights = fetchAll("
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Sandigan Colleges Incorporated</h5>
-                    <p>Alumni Information System</p>
-                    <p>Sandigan</p>
-                    <p>Phone: +63 (33) 331-9447</p>
-                    <p>Email: info@SCI.edu.ph</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="index.php" class="text-white-50">Home</a></li>
-                        <li><a href="about.php" class="text-white-50">About</a></li>
-                        <li><a href="admin_login.php" class="text-white-50">Admin Login</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Connect With Us</h5>
-                    <div class="d-flex">
-                        <a href="#" class="text-white-50 me-3"><i class="fab fa-facebook fa-2x"></i></a>
-                        <a href="#" class="text-white-50 me-3"><i class="fab fa-twitter fa-2x"></i></a>
-                        <a href="#" class="text-white-50 me-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                        <a href="#" class="text-white-50"><i class="fab fa-instagram fa-2x"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p>&copy; 2024 Northern Iloilo State University Alumni System. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <?php include 'include_homepage/footer.php'; ?>
 
     <!-- Scripts -->
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
