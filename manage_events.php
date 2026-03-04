@@ -3,6 +3,85 @@ session_start();
 require_once 'db_con.php';
 require_once 'auth_check.php';
 
+$allowedEventImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+$maxEventImageSize = 5 * 1024 * 1024;
+$eventUploadBase = 'uploads/events/';
+
+function ensureDirectoryPath($path) {
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+}
+
+function uploadEventImageFile($file, $subfolder = '') {
+    global $allowedEventImageTypes, $maxEventImageSize, $eventUploadBase;
+
+    if (empty($file) || !isset($file['tmp_name']) || $file['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        throw new Exception('Image upload error code ' . $file['error']);
+    }
+
+    if ($file['size'] > $maxEventImageSize) {
+        throw new Exception("File {$file['name']} exceeds " . ($maxEventImageSize / 1024 / 1024) . "MB limit");
+    }
+
+    $tmpPath = $file['tmp_name'];
+    $mime = mime_content_type($tmpPath);
+    if (!in_array($mime, $allowedEventImageTypes)) {
+        throw new Exception("Unsupported image format for {$file['name']}");
+    }
+
+    $subfolder = trim($subfolder, '/');
+    $targetDir = $eventUploadBase . ($subfolder ? $subfolder . '/' : '');
+    ensureDirectoryPath($targetDir);
+
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $extension = $extension ?: 'jpg';
+    $filename = uniqid('event_' . ($subfolder ?: 'asset') . '_') . '.' . $extension;
+    $destination = $targetDir . $filename;
+
+    if (!move_uploaded_file($tmpPath, $destination)) {
+        throw new Exception("Failed to save uploaded image {$file['name']}");
+    }
+
+    return $destination;
+}
+
+function uploadEventGalleryFiles($files) {
+    $paths = [];
+    if (empty($files) || empty($files['name'])) {
+        return $paths;
+    }
+
+    $count = count($files['name']);
+    for ($i = 0; $i < $count; $i++) {
+        if ($files['error'][$i] === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+
+        $fileInfo = [
+            'name' => $files['name'][$i],
+            'type' => $files['type'][$i],
+            'tmp_name' => $files['tmp_name'][$i],
+            'error' => $files['error'][$i],
+            'size' => $files['size'][$i]
+        ];
+
+        $paths[] = uploadEventImageFile($fileInfo, 'gallery');
+    }
+
+    return $paths;
+}
+
+function deleteFileIfExists($path) {
+    if ($path && file_exists($path)) {
+        @unlink($path);
+    }
+}
+
 // Handle AJAX requests
 if (isset($_POST['action'])) {
     header('Content-Type: application/json');
@@ -10,6 +89,10 @@ if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case 'add':
             try {
+                $featuredImagePath = uploadEventImageFile($_FILES['featured_image'] ?? null, 'featured');
+                $galleryPaths = uploadEventGalleryFiles($_FILES['gallery_files'] ?? null);
+                $galleryJson = !empty($galleryPaths) ? json_encode($galleryPaths) : null;
+
                 $data = [
                     $_SESSION['admin_id'],
                     $_POST['title'],
@@ -27,10 +110,12 @@ if (isset($_POST['action'])) {
                     $_POST['registration_deadline'] ?: null,
                     $_POST['max_attendees'] ?: null,
                     $_POST['registration_fee'] ?: 0.00,
-                    $_POST['status']
+                    $_POST['status'],
+                    $featuredImagePath,
+                    $galleryJson
                 ];
                 
-                query("INSERT INTO events (admin_id, title, description, event_type, start_date, end_date, start_time, end_time, venue, address, is_online, meeting_link, registration_required, registration_deadline, max_attendees, registration_fee, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
+                query("INSERT INTO events (admin_id, title, description, event_type, start_date, end_date, start_time, end_time, venue, address, is_online, meeting_link, registration_required, registration_deadline, max_attendees, registration_fee, status, featured_image, gallery) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
                 
                 echo json_encode(['success' => true, 'message' => 'Event added successfully']);
             } catch (Exception $e) {
@@ -40,6 +125,52 @@ if (isset($_POST['action'])) {
             
         case 'edit':
             try {
+                $eventId = $_POST['id'];
+                $event = fetchRow("SELECT featured_image, gallery FROM events WHERE id = ?", [$eventId]);
+                if (!$event) {
+                    throw new Exception('Event not found');
+                }
+
+                $featuredImagePath = $event['featured_image'];
+                $currentGallery = json_decode($event['gallery'] ?? '[]', true);
+                $currentGallery = is_array($currentGallery) ? $currentGallery : [];
+
+                $removedGallery = $_POST['gallery_remove'] ?? [];
+                if (!is_array($removedGallery)) {
+                    $removedGallery = [$removedGallery];
+                }
+                foreach ($removedGallery as $removePath) {
+                    $removePath = trim($removePath);
+                    if ($removePath === '') {
+                        continue;
+                    }
+                    foreach ($currentGallery as $index => $existingPath) {
+                        if ($existingPath === $removePath) {
+                            unset($currentGallery[$index]);
+                            deleteFileIfExists($existingPath);
+                            break;
+                        }
+                    }
+                }
+                $currentGallery = array_values($currentGallery);
+
+                $uploadedGallery = uploadEventGalleryFiles($_FILES['gallery_files'] ?? null);
+                $updatedGallery = array_merge($currentGallery, $uploadedGallery);
+                $galleryJson = !empty($updatedGallery) ? json_encode($updatedGallery) : null;
+
+                $uploadedFeatured = uploadEventImageFile($_FILES['featured_image'] ?? null, 'featured');
+                $removeFeatured = !empty($_POST['remove_featured_image']);
+                if ($uploadedFeatured) {
+                    if ($featuredImagePath) {
+                        deleteFileIfExists($featuredImagePath);
+                    }
+                    $featuredImagePath = $uploadedFeatured;
+                    $removeFeatured = false;
+                } elseif ($removeFeatured && $featuredImagePath) {
+                    deleteFileIfExists($featuredImagePath);
+                    $featuredImagePath = null;
+                }
+
                 $data = [
                     $_POST['title'],
                     $_POST['description'] ?: null,
@@ -57,10 +188,12 @@ if (isset($_POST['action'])) {
                     $_POST['max_attendees'] ?: null,
                     $_POST['registration_fee'] ?: 0.00,
                     $_POST['status'],
-                    $_POST['id']
+                    $featuredImagePath,
+                    $galleryJson,
+                    $eventId
                 ];
                 
-                query("UPDATE events SET title=?, description=?, event_type=?, start_date=?, end_date=?, start_time=?, end_time=?, venue=?, address=?, is_online=?, meeting_link=?, registration_required=?, registration_deadline=?, max_attendees=?, registration_fee=?, status=? WHERE id=?", $data);
+                query("UPDATE events SET title=?, description=?, event_type=?, start_date=?, end_date=?, start_time=?, end_time=?, venue=?, address=?, is_online=?, meeting_link=?, registration_required=?, registration_deadline=?, max_attendees=?, registration_fee=?, status=?, featured_image=?, gallery=? WHERE id=?", $data);
                 
                 echo json_encode(['success' => true, 'message' => 'Event updated successfully']);
             } catch (Exception $e) {
@@ -70,6 +203,16 @@ if (isset($_POST['action'])) {
             
         case 'delete':
             try {
+                $eventToDelete = fetchRow("SELECT featured_image, gallery FROM events WHERE id = ?", [$_POST['id']]);
+                if ($eventToDelete) {
+                    deleteFileIfExists($eventToDelete['featured_image']);
+                    $galleryItems = json_decode($eventToDelete['gallery'] ?? '[]', true);
+                    if (is_array($galleryItems)) {
+                        foreach ($galleryItems as $galleryPath) {
+                            deleteFileIfExists($galleryPath);
+                        }
+                    }
+                }
                 query("DELETE FROM events WHERE id = ?", [$_POST['id']]);
                 echo json_encode(['success' => true, 'message' => 'Event deleted successfully']);
             } catch (Exception $e) {
@@ -256,7 +399,7 @@ $events = fetchAll("
                     <h5 class="modal-title" id="eventModalLabel">Add Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="eventForm">
+                <form id="eventForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="hidden" id="event_id" name="id">
                         <input type="hidden" id="form_action" name="action" value="add">
@@ -380,6 +523,23 @@ $events = fetchAll("
                         </div>
                         
                         <div class="mb-3">
+                            <label class="form-label">Featured Image</label>
+                            <div id="featuredPreview" class="d-flex flex-wrap gap-2 mb-2"></div>
+                            <input type="hidden" name="remove_featured_image" id="remove_featured_image" value="0">
+                            <input type="file" class="form-control" id="featured_image_input" name="featured_image" accept="image/*">
+                            <small class="text-muted">Optional. JPG, PNG, GIF, or WebP. Max 5MB.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Event Gallery</label>
+                            <div id="existingGallery" class="d-flex flex-wrap gap-2 mb-2"></div>
+                            <div id="selectedGalleryPreview" class="d-flex flex-wrap gap-2 mb-2"></div>
+                            <input type="file" class="form-control" id="galleryFilesInput" multiple accept="image/*">
+                            <small class="text-muted">You can select multiple photos; they will be appended to the gallery.</small>
+                            <div id="galleryRemoveInputs"></div>
+                        </div>
+                        
+                        <div class="mb-3">
                             <label class="form-label">Status *</label>
                             <select class="form-select" name="status" required>
                                 <option value="Draft">Draft</option>
@@ -407,11 +567,233 @@ $events = fetchAll("
     <script src="assets/js/kaiadmin.min.js"></script>
 
     <script>
+        const featuredImageInput = document.getElementById('featured_image_input');
+        const galleryFilesInput = document.getElementById('galleryFilesInput');
+        const featuredPreview = document.getElementById('featuredPreview');
+        const existingGalleryContainer = document.getElementById('existingGallery');
+        const selectedGalleryPreview = document.getElementById('selectedGalleryPreview');
+        const galleryRemoveInputs = document.getElementById('galleryRemoveInputs');
+        let currentFeaturedImage = null;
+        let existingGallery = [];
+        let removedGalleryPaths = [];
+        let selectedGalleryFiles = [];
+
+        function renderFeaturedPreview() {
+            if (!featuredPreview) {
+                return;
+            }
+
+            featuredPreview.innerHTML = '';
+            const removeField = document.getElementById('remove_featured_image');
+
+            if (featuredImageInput && featuredImageInput.files.length) {
+                const file = featuredImageInput.files[0];
+                const previewUrl = URL.createObjectURL(file);
+                const wrapper = document.createElement('div');
+                wrapper.className = 'border rounded';
+                wrapper.style.width = '140px';
+                wrapper.style.height = '90px';
+                wrapper.style.overflow = 'hidden';
+                wrapper.innerHTML = `<img src="${previewUrl}" alt="Featured preview" style="width:100%;height:100%;object-fit:cover;">`;
+                featuredPreview.appendChild(wrapper);
+                const note = document.createElement('small');
+                note.className = 'text-muted d-block mt-1';
+                note.textContent = 'New thumbnail will replace the current image.';
+                featuredPreview.appendChild(note);
+
+                if (removeField) {
+                    removeField.value = '0';
+                }
+                return;
+            }
+
+            if (currentFeaturedImage) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'border rounded position-relative';
+                wrapper.style.width = '140px';
+                wrapper.style.height = '90px';
+                wrapper.style.overflow = 'hidden';
+                wrapper.innerHTML = `<img src="${currentFeaturedImage}" alt="Featured image" style="width:100%;height:100%;object-fit:cover;">`;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn btn-sm btn-danger position-absolute';
+                removeBtn.style.top = '4px';
+                removeBtn.style.right = '4px';
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', () => {
+                    if (removeField) {
+                        removeField.value = '1';
+                    }
+                    currentFeaturedImage = null;
+                    if (featuredImageInput) {
+                        featuredImageInput.value = '';
+                    }
+                    renderFeaturedPreview();
+                });
+
+                wrapper.appendChild(removeBtn);
+                featuredPreview.appendChild(wrapper);
+                return;
+            }
+
+            const placeholder = document.createElement('small');
+            placeholder.className = 'text-muted';
+            placeholder.textContent = 'No featured image selected.';
+            featuredPreview.appendChild(placeholder);
+
+            if (removeField) {
+                removeField.value = '0';
+            }
+        }
+
+        function renderExistingGallery() {
+            if (!existingGalleryContainer) {
+                return;
+            }
+
+            existingGalleryContainer.innerHTML = '';
+
+            if (!existingGallery.length) {
+                const placeholder = document.createElement('small');
+                placeholder.className = 'text-muted';
+                placeholder.textContent = 'No gallery images uploaded.';
+                existingGalleryContainer.appendChild(placeholder);
+                return;
+            }
+
+            existingGallery.forEach(src => {
+                const thumb = document.createElement('div');
+                thumb.className = 'border rounded position-relative';
+                thumb.style.width = '110px';
+                thumb.style.height = '70px';
+                thumb.style.overflow = 'hidden';
+                thumb.innerHTML = `<img src="${src}" alt="Gallery image" style="width:100%;height:100%;object-fit:cover;">`;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn btn-sm btn-danger position-absolute';
+                removeBtn.style.top = '4px';
+                removeBtn.style.right = '4px';
+                removeBtn.textContent = 'X';
+                removeBtn.addEventListener('click', () => {
+                    removedGalleryPaths.push(src);
+                    const index = existingGallery.indexOf(src);
+                    if (index > -1) {
+                        existingGallery.splice(index, 1);
+                    }
+                    renderExistingGallery();
+                    updateGalleryRemoveInputs();
+                });
+
+                thumb.appendChild(removeBtn);
+                existingGalleryContainer.appendChild(thumb);
+            });
+        }
+
+        function renderSelectedGalleryPreview() {
+            if (!selectedGalleryPreview) {
+                return;
+            }
+
+            selectedGalleryPreview.innerHTML = '';
+
+            if (!selectedGalleryFiles.length) {
+                const placeholder = document.createElement('small');
+                placeholder.className = 'text-muted';
+                placeholder.textContent = 'No new gallery images selected.';
+                selectedGalleryPreview.appendChild(placeholder);
+                return;
+            }
+
+            selectedGalleryFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'border rounded p-2 position-relative';
+                item.style.minWidth = '140px';
+                item.innerHTML = `
+                    <strong class="d-block">${file.name}</strong>
+                    <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                `;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn btn-sm btn-outline-danger position-absolute';
+                removeBtn.style.top = '4px';
+                removeBtn.style.right = '4px';
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', () => {
+                    selectedGalleryFiles.splice(index, 1);
+                    renderSelectedGalleryPreview();
+                });
+
+                item.appendChild(removeBtn);
+                selectedGalleryPreview.appendChild(item);
+            });
+        }
+
+        function updateGalleryRemoveInputs() {
+            if (!galleryRemoveInputs) {
+                return;
+            }
+
+            galleryRemoveInputs.innerHTML = '';
+            removedGalleryPaths.forEach(path => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'gallery_remove[]';
+                input.value = path;
+                galleryRemoveInputs.appendChild(input);
+            });
+        }
+
+        function resetImageSections() {
+            currentFeaturedImage = null;
+            existingGallery = [];
+            removedGalleryPaths = [];
+            selectedGalleryFiles = [];
+            if (featuredImageInput) {
+                featuredImageInput.value = '';
+            }
+            if (galleryFilesInput) {
+                galleryFilesInput.value = '';
+            }
+            const removeField = document.getElementById('remove_featured_image');
+            if (removeField) {
+                removeField.value = '0';
+            }
+            renderFeaturedPreview();
+            renderExistingGallery();
+            renderSelectedGalleryPreview();
+            updateGalleryRemoveInputs();
+        }
+
+        if (featuredImageInput) {
+            featuredImageInput.addEventListener('change', function () {
+                const removeField = document.getElementById('remove_featured_image');
+                if (removeField) {
+                    removeField.value = '0';
+                }
+                renderFeaturedPreview();
+            });
+        }
+
+        if (galleryFilesInput) {
+            galleryFilesInput.addEventListener('change', function () {
+                const files = Array.from(this.files || []);
+                if (files.length) {
+                    selectedGalleryFiles = selectedGalleryFiles.concat(files);
+                    renderSelectedGalleryPreview();
+                }
+                this.value = '';
+            });
+        }
+
         function openAddModal() {
             document.getElementById('eventModalLabel').textContent = 'Add Event';
             document.getElementById('form_action').value = 'add';
             document.getElementById('eventForm').reset();
             document.getElementById('event_id').value = '';
+            resetImageSections();
             toggleOnlineFields();
             toggleRegistrationFields();
         }
@@ -425,14 +807,39 @@ $events = fetchAll("
                     
                     Object.keys(data).forEach(key => {
                         const field = document.querySelector(`[name="${key}"]`);
-                        if (field) {
-                            if (field.type === 'checkbox') {
-                                field.checked = data[key] == 1;
-                            } else {
-                                field.value = data[key] || '';
-                            }
+                        if (!field) {
+                            return;
                         }
+
+                        if (field.type === 'checkbox') {
+                            field.checked = data[key] == 1;
+                            return;
+                        }
+
+                        if (field.type === 'file') {
+                            return;
+                        }
+
+                        field.value = data[key] || '';
                     });
+
+                    currentFeaturedImage = data.featured_image || null;
+                    document.getElementById('remove_featured_image').value = '0';
+                    existingGallery = [];
+                    removedGalleryPaths = [];
+                    selectedGalleryFiles = [];
+                    if (data.gallery) {
+                        try {
+                            const parsedGallery = JSON.parse(data.gallery);
+                            existingGallery = Array.isArray(parsedGallery) ? parsedGallery : [];
+                        } catch (error) {
+                            existingGallery = [];
+                        }
+                    }
+                    renderFeaturedPreview();
+                    renderExistingGallery();
+                    renderSelectedGalleryPreview();
+                    updateGalleryRemoveInputs();
                     
                     toggleOnlineFields();
                     toggleRegistrationFields();
@@ -483,20 +890,34 @@ $events = fetchAll("
             document.getElementById('registration_fields').style.display = registrationRequired ? 'block' : 'none';
         }
         
-        // Handle form submission
         $('#eventForm').on('submit', function(e) {
             e.preventDefault();
             
-            $.post('manage_events.php', $(this).serialize(), function(response) {
-                if (response.success) {
-                    swal("Success!", response.message, "success").then(() => {
-                        $('#eventModal').modal('hide');
-                        location.reload();
-                    });
-                } else {
-                    swal("Error!", response.message, "error");
+            const formData = new FormData(this);
+            selectedGalleryFiles.forEach(file => {
+                formData.append('gallery_files[]', file);
+            });
+
+            $.ajax({
+                url: 'manage_events.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        swal("Success!", response.message, "success").then(() => {
+                            $('#eventModal').modal('hide');
+                            location.reload();
+                        });
+                    } else {
+                        swal("Error!", response.message, "error");
+                    }
+                },
+                error: function() {
+                    swal("Error!", "Failed to save event. Please try again.", "error");
                 }
-            }, 'json');
+            });
         });
     </script>
 </body>

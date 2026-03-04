@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="image-frame">
-                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Campus" onerror="this.src='default/default-photo.png'">
+                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Campus" onerror="this.src='default/school.png'">
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
             <div class="row g-4 align-items-stretch">
                 <div class="col-lg-5">
                     <div class="image-frame">
-                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Community" onerror="this.src='default/default-photo.png'">
+                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Community" onerror="this.src='default/logo2.png'">
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="image-frame">
-                        <img src="/placeholder.svg?height=520&width=520" alt="President" onerror="this.src='default/default-photo.png'">
+                        <img src="/placeholder.svg?height=520&width=520" alt="President" onerror="this.src='default/presidentpic.png'">
                     </div>
                 </div>
             </div>

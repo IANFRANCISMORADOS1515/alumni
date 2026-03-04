@@ -63,11 +63,30 @@ function getDefaultImage($type, $image) {
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="style/main.css" />
+    <style>
+        .hero-section.hero-watermark {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section.hero-watermark::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('default/logo.png') center/contain no-repeat;
+            background-size: 65%;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+        .hero-section.hero-watermark .container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
     <?php include 'include_homepage/navbar.php'; ?>
 
-    <section class="hero-section">
+    <section class="hero-section hero-watermark">
         <div class="container">
             <h1 class="display-5 fw-bold mb-3">Sandigan Colleges Incorporated Events</h1>
             <p class="lead mb-4">Upcoming activities and community gatherings for SCI alumni</p>
@@ -207,6 +226,28 @@ function getDefaultImage($type, $image) {
 
                     if (type === 'event') {
                         $('#detailModalTitle').text(data.title);
+                        let galleryMarkup = '';
+                        try {
+                            const parsedGallery = data.gallery ? JSON.parse(data.gallery) : [];
+                            const galleryImages = Array.isArray(parsedGallery) ? parsedGallery.filter(Boolean) : [];
+                            if (galleryImages.length) {
+                                galleryMarkup = `
+                                    <div class="mt-4">
+                                        <h6 class="mb-2">Gallery</h6>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            ${galleryImages.map(src => `
+                                                <div class="gallery-thumb border rounded" style="width: 100px; height: 70px; overflow: hidden;">
+                                                    <img src="${src}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='default/default-event.png';" alt="Gallery image">
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        } catch (error) {
+                            galleryMarkup = '';
+                        }
+
                         content = `
                             <div class="mb-3">
                                 <span class="badge badge-success me-2">${data.event_type}</span>
@@ -216,6 +257,7 @@ function getDefaultImage($type, $image) {
                             <p><i class="fas fa-calendar"></i> <strong>Date:</strong> ${new Date(data.start_date).toLocaleDateString()}</p>
                             ${data.venue ? `<p><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> ${data.venue}</p>` : ''}
                             <div class="content">${data.content ? data.content.replace(/\n/g, '<br>') : 'No description available.'}</div>
+                            ${galleryMarkup}
                         `;
                     }
 
@@ -232,6 +274,3 @@ function getDefaultImage($type, $image) {
     </script>
 </body>
 </html>
-
-
-

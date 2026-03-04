@@ -188,9 +188,22 @@ function getDefaultImage($type, $image) {
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="style/main.css" />
     <style>
+        .hero-section.hero-watermark {
+            position: relative;
+            overflow: hidden;
+        }
         .hero-section.hero-watermark::after {
-            background: url('/default/logo.png') center/contain no-repeat;
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('default/logo.png') center/contain no-repeat;
             background-size: 55%;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .hero-section.hero-watermark .container {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
