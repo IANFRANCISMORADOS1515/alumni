@@ -91,7 +91,7 @@
             <div class="row g-4 align-items-stretch">
                 <div class="col-lg-5">
                     <div class="image-frame">
-                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Community" onerror="this.src='default/logo2.png'">
+                        <img src="/placeholder.svg?height=520&width=520" alt="SCI Community" onerror="this.src='default/logo2.png'" style="object-fit: contain; width: 100%; height: 100%; transform: scale(1.3);">
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -123,9 +123,7 @@
             </div>
         </div>
     </section>
-
     <?php include 'include_homepage/footer.php'; ?>
-
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
