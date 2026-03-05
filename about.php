@@ -30,13 +30,32 @@ $recent_highlights = fetchAll("
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="default/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style/main.css" />
+    <link rel="stylesheet" href="style/main.css"/>
 </head>
 <body>
     <?php include 'include_homepage/navbar.php'; ?>
+    <style>
+        .hero-section.hero-watermark {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section.hero-watermark::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('default/logo.png') center/contain no-repeat;
+            background-size: 55%;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .hero-section.hero-watermark .container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section hero-watermark" id="home">
         <div class="container">
             <h1 class="display-4 fw-bold mb-4">About Sandigan Colleges, Inc.</h1>
             <p class="lead mb-0">Excellence in Education, Innovation, and Service</p>
@@ -44,35 +63,50 @@ $recent_highlights = fetchAll("
     </section>
 
     <!-- Mission, Vision, Goals Section -->
-    <section class="py-5">
+    <section class="py-5 bg-light">
         <div class="container">
-            <h2 class="section-title">Our Foundation</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="mission-vision-card">
-                        <div class="mission-vision-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h4 class="mb-3">Vision</h4>
-                        <p>To be a leading state university in the Philippines that produces globally competitive graduates and conducts relevant research and extension services for sustainable development.</p>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="content-card h-100">
+                        <h2 class="section-title mt-3">Vision</h2>
+                        <p class="mt-3 muted">To be a leading educational institution that inspires innovation, fosters ethical leadership, and transforms lives through quality education and community engagement. We aim to create an environment that exemplifies unity and excellence, shaping future leaders who are committed to loyalty and service.</p>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="mission-vision-card">
-                        <div class="mission-vision-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <h4 class="mb-3">Mission</h4>
-                        <p>To provide quality, accessible, and relevant higher education that develops competent and socially responsible individuals through excellent instruction, research, and extension services.</p>
+                <div class="col-lg-6">
+                    <div class="content-card h-100">
+                        <h2 class="section-title mt-3">Mission</h2>
+                        <p class="mt-3 muted">Sandigan Colleges, Inc. is dedicated to providing accessible, holistic, and high-quality education that nurtures intellectual curiosity, critical thinking, and strong moral values.</p>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="mission-vision-card">
-                        <div class="mission-vision-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <h4 class="mb-3">Goals</h4>
-                        <p>To foster academic excellence, promote research and innovation, strengthen community partnerships, and develop sustainable programs that contribute to national development.</p>
+            </div>
+            <div class="row g-4 mt-1">
+                <div class="col-12">
+                    <div class="content-card h-100">
+                        <h2 class="section-title mt-3">Goal & Objectives</h2>
+                        <p class="mt-3 muted">Deliver Academic Excellence: Offer a well-rounded curriculum that promotes academic rigor, practical application, and moral development, while encouraging unity within the academic community.</p>
+                        <p class="muted">Foster Holistic Growth: Create an environment that nurtures intellectual, emotional, social, and spiritual well-being, grounded in the core values of integrity, loyalty, and service.</p>
+                        <p class="muted">Promote Lifelong Learning: Instill a passion for continuous learning and adaptability, preparing students to thrive in an ever-changing world and remain loyal to their personal and professional growth.</p>
+                        <p class="muted">Engage the Community: Build strong partnerships with stakeholders to address societal challenges, foster collaboration, and contribute to the community through service-driven initiatives.</p>
+                        <p class="muted">Champion Innovation and Leadership: Develop globally competitive graduates who embody leadership, creativity, and ethical responsibility, upholding the principles of excellence and loyalty.</p>
+                        <p class="muted mb-0">Sustain Intellectual Growth: Invest in institutional resources, faculty development, and infrastructure to ensure sustainable programs that promote excellence and service for future generations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="py-5">
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-7">
+                    <div class="content-card h-100">
+                        <span class="pill">Quick Word From our President!</span>
+                        <h2 class="section-title mt-3">President Message</h2>
+                        <p class="muted">Sandigan Colleges, Inc., believes that education is the cornerstone of personal growth and societal transformation. By fostering a culture grounded in unity, integrity, and lifelong learning, we empower individuals to reach their fullest potential. Encouraging students to contribute meaningfully to the world while upholding the values of loyalty and service in both their personal and professional lives.</p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="image-frame">
+                        <img src="/placeholder.svg?height=520&width=520" alt="President" onerror="this.src='default/presidentpic.png'">
                     </div>
                 </div>
             </div>
@@ -121,23 +155,28 @@ $recent_highlights = fetchAll("
                     <div class="history-timeline">
                         <div class="timeline-item">
                             <div class="timeline-year"></div>
-                            <h5></h5>
-                            <p></p>
+                            <h5>testing</h5>
+                            <p>testing</p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-year"></div>
-                            <h5></h5>
-                            <p></p>
+                            <h5>testing</h5>
+                            <p>testing</p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-year"></div>
-                            <h5></h5>
-                            <p></p>
+                            <h5>testing</h5>
+                            <p>testing</p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-year"></div>
-                            <h5></h5>
-                            <p></p>
+                            <h5>testing</h5>
+                            <p>testing</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year"></div>
+                            <h5>testing</h5>
+                            <p>testing</p>
                         </div>
                     </div>
                 </div>

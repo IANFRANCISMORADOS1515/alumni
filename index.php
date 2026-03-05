@@ -52,13 +52,13 @@
                     </div>
                     <div class="col-6 col-lg-3">
                         <div class="stat-item">
-                            <div class="stat-number-large">17</div>
-                            <div class="stat-label">Chapters Worldwide</div>
+                            <div class="stat-number-large">8</div>
+                            <div class="stat-label">Philippine Branch</div>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3">
                         <div class="stat-item">
-                            <div class="stat-number-large">140K</div>
+                            <div class="stat-number-large">10K</div>
                             <div class="stat-label">Alumni Members</div>
                         </div>
                     </div>
@@ -105,55 +105,6 @@
         </div>
     </section>
 
-    <section class="py-5">
-        <div class="container">
-            <div class="row g-4 align-items-stretch">
-                <div class="col-lg-7">
-                    <div class="content-card h-100">
-                        <span class="pill">Quick Word From our President!</span>
-                        <h2 class="section-title mt-3">President Message</h2>
-                        <p class="muted">Sandigan Colleges, Inc., believes that education is the cornerstone of personal growth and societal transformation. By fostering a culture grounded in unity, integrity, and lifelong learning, we empower individuals to reach their fullest potential. Encouraging students to contribute meaningfully to the world while upholding the values of loyalty and service in both their personal and professional lives.</p>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="image-frame">
-                        <img src="/placeholder.svg?height=520&width=520" alt="President" onerror="this.src='default/presidentpic.png'">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="content-card h-100">
-                        <h2 class="section-title mt-3">Vision</h2>
-                        <p class="mt-3 muted">To be a leading educational institution that inspires innovation, fosters ethical leadership, and transforms lives through quality education and community engagement. We aim to create an environment that exemplifies unity and excellence, shaping future leaders who are committed to loyalty and service.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="content-card h-100">
-                        <h2 class="section-title mt-3">Mission</h2>
-                        <p class="mt-3 muted">Sandigan Colleges, Inc. is dedicated to providing accessible, holistic, and high-quality education that nurtures intellectual curiosity, critical thinking, and strong moral values.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4 mt-1">
-                <div class="col-12">
-                    <div class="content-card h-100">
-                        <h2 class="section-title mt-3">Goal & Objectives</h2>
-                        <p class="mt-3 muted">Deliver Academic Excellence: Offer a well-rounded curriculum that promotes academic rigor, practical application, and moral development, while encouraging unity within the academic community.</p>
-                        <p class="muted">Foster Holistic Growth: Create an environment that nurtures intellectual, emotional, social, and spiritual well-being, grounded in the core values of integrity, loyalty, and service.</p>
-                        <p class="muted">Promote Lifelong Learning: Instill a passion for continuous learning and adaptability, preparing students to thrive in an ever-changing world and remain loyal to their personal and professional growth.</p>
-                        <p class="muted">Engage the Community: Build strong partnerships with stakeholders to address societal challenges, foster collaboration, and contribute to the community through service-driven initiatives.</p>
-                        <p class="muted">Champion Innovation and Leadership: Develop globally competitive graduates who embody leadership, creativity, and ethical responsibility, upholding the principles of excellence and loyalty.</p>
-                        <p class="muted mb-0">Sustain Intellectual Growth: Invest in institutional resources, faculty development, and infrastructure to ensure sustainable programs that promote excellence and service for future generations.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <section class="py-5">
         <div class="container">
             <div class="row g-4 align-items-stretch">

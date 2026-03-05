@@ -76,6 +76,8 @@ if ($_POST) {
             box-shadow: 0 25px 45px rgba(5, 90, 46, 0.35);
             border: 1px solid rgba(5, 90, 46, 0.15);
             overflow: hidden;
+            max-width: 420px;
+            margin: 0 auto;
         }
         .login-panel .content-card {
             margin: 0;
@@ -85,15 +87,38 @@ if ($_POST) {
         .login-panel .form-control {
             border-radius: 12px;
             border: 1px solid #dfe3ea;
-            padding: 14px;
+            padding: 3px;
             transition: border-color 0.3s ease;
+            max-width: 320px;
+            width: 100%;
+            display: block;
+            margin: 0 auto;
+            align-self: center;
         }
         .login-panel .form-control:focus {
-            border-color: #1572e8;
+            border-color: #15e85f;
             box-shadow: 0 0 0 0.2rem rgba(21, 114, 232, 0.25);
         }
-        .login-panel .btn-login {
+        .login-panel .form-label {
             width: 100%;
+            text-align: left;
+            margin-bottom: 0.35rem;
+        }
+        .login-panel .mb-3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-panel .password-container {
+            width: 100%;
+            max-width: 320px;
+            position: relative;
+        }
+        .login-panel .password-container .form-control {
+            padding-right: 42px;
+        }
+        .login-panel .btn-login {
+            width: 40%;
         }
         .login-panel .login-heading {
             margin-bottom: 1.5rem;
@@ -114,13 +139,13 @@ if ($_POST) {
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         .login-panel .school-logo img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
         }
         .password-toggle {
             right: 15px;
-            top: 50%;
+            top: 55%;
             transform: translateY(-50%);
             background: none;
             border: none;
@@ -136,6 +161,31 @@ if ($_POST) {
         .hero-section .section-title {
             color: #fff;
         }
+        .return-home {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 9;
+        padding: 2px 5px;
+        font-size: 10px;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+        .return-home:hover {
+            text-decoration: none;
+            color: rgba(210, 224, 215, 0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+        }
+        .return-home i {
+            color: inherit;
+        }
         @media (max-width: 991px) {
             .hero-section.login-hero {
                 padding: 40px 0;
@@ -145,13 +195,14 @@ if ($_POST) {
 </head>
 <body>
     <section class="hero-section hero-watermark login-hero">
+            <a href="index.php" class="return-home"><i class="fas fa-home"></i> Home</a>
+    <div class="container">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-lg-6 text-center text-lg-start">
                     <span class="pill">ADMIN PORTAL</span>
                     <h1 class="section-title mt-3 mb-3">Sandigan Colleges Incorporated</h1>
-                    <p class="lead-copy text-white-75 mb-4">Manage alumni data, announcements, and events with a secure administrative hub styled after the SCI brand.</p>
-                    <p class="text-white-50 mb-0">Last refreshed: March 4, 2026</p>
+                    <p class="lead-copy text-white-75 mb-4">Sandigan Colleges, Inc. is dedicated to providing accessible, holistic, and high-quality education that nurtures intellectual curiosity, critical thinking, and strong moral values.</p>
                 </div>
                 <div class="col-lg-6">
                     <div class="login-panel">
@@ -204,7 +255,7 @@ if ($_POST) {
                                 </div>
                                 <button type="submit" class="btn btn-success btn-login mt-2">
                                     <i class="fas fa-sign-in-alt me-2"></i>
-                                    Login to Dashboard
+                                    Login
                                 </button>
                                 <p class="helper-text mb-0">Need assistance? Email <strong>admin@sandigan.edu.ph</strong></p>
                             </form>
@@ -230,7 +281,6 @@ if ($_POST) {
                 toggleIcon.classList.add('fa-eye');
             }
         }
-
         document.getElementById('loginForm').addEventListener('submit', function() {
             const submitBtn = document.querySelector('.btn-login');
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Logging in...';
