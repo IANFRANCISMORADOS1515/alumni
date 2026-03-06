@@ -362,6 +362,9 @@ function getDefaultImage($type, $image) {
                         <?php if ($alumni['bio']): ?>
                         <p class="mt-2 small"><?= htmlspecialchars(substr($alumni['bio'], 0, 80)) ?>...</p>
                         <?php endif; ?>
+                            <svg class="card-border" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <rect x="2" y="2" width="96" height="96" rx="12" ry="12"/>
+                            </svg>
                     </div>
                 </div>
                 <?php endforeach; ?>
