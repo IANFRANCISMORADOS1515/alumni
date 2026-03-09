@@ -1,0 +1,396 @@
+/* About Page Styles */
+
+/* Mission, Vision, Goals Cards */
+.mvg-card {
+    position: relative;
+    border: 1px solid rgba(31, 109, 58, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mvg-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-green), var(--brand-gold));
+}
+
+.mvg-card:hover {
+    border-color: rgba(31, 109, 58, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(31, 109, 58, 0.15);
+}
+
+.mvg-card .mvg-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brand-green), var(--brand-gold));
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.mvg-card:hover .mvg-icon {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Goals Grid */
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.goal-item {
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(31, 109, 58, 0.08), rgba(39, 174, 96, 0.08));
+    border: 1px solid rgba(31, 109, 58, 0.1);
+    transition: all 0.3s ease;
+}
+
+.goal-item:hover {
+    border-color: var(--brand-green);
+    box-shadow: 0 8px 20px rgba(31, 109, 58, 0.15);
+    transform: translateY(-3px);
+}
+
+.goal-number {
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--brand-green);
+    opacity: 0.6;
+    margin-bottom: 10px;
+}
+
+.goal-item h6 {
+    color: var(--brand-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.goal-item p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* President Card */
+.president-card {
+    padding: 40px!important;
+    border: 1px solid rgba(31, 109, 58, 0.1);
+    position: relative;
+}
+
+.president-header {
+    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(31, 109, 58, 0.15);
+    margin-bottom: 30px;
+}
+
+.president-content {
+    animation: slideUp 0.6s ease 0.2s backwards;
+}
+
+.president-content p:first-of-type {
+    font-size: 1.15rem;
+    color: var(--brand-dark);
+    margin-bottom: 15px;
+}
+
+.president-signature {
+    padding: 15px 0;
+    border-top: 1px solid rgba(31, 109, 58, 0.1);
+    font-style: italic;
+    color: var(--muted);
+}
+
+.president-signature strong {
+    color: var(--brand-dark);
+    font-style: normal;
+}
+
+/* President Image */
+.president-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(31, 109, 58, 0.2);
+}
+
+.president-image img {
+    transition: transform 0.4s ease;
+}
+
+.president-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(31, 109, 58, 0.1), transparent);
+    pointer-events: none;
+}
+
+/* Modern Statistics Cards */
+.stat-card-modern {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border: 1px solid rgba(31, 109, 58, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-modern::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(31, 109, 58, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card-modern:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(31, 109, 58, 0.2);
+}
+
+.stat-card-modern:hover::before {
+    opacity: 1;
+}
+
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brand-green), var(--brand-gold));
+    color: white;
+    font-size: 1.8rem;
+    margin: 0 auto 20px;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-card-modern:hover .stat-icon {
+    transform: scale(1.15) rotate(10deg);
+}
+
+.stat-card-modern .stat-number {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--brand-green);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-card-modern .stat-label {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* Modern Feature Cards */
+.feature-card-modern {
+    position: relative;
+    padding: 30px 24px!important;
+    border: 1px solid rgba(31, 109, 58, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.feature-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-green), var(--brand-gold));
+}
+
+.feature-card-modern:hover {
+    border-color: var(--brand-green);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(31, 109, 58, 0.15);
+}
+
+.feature-card-modern h5 {
+    color: var(--brand-dark);
+    font-weight: 700;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.feature-card-modern:hover h5 {
+    color: var(--brand-green);
+}
+
+.feature-card-modern p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.feature-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-gold), var(--brand-green));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.feature-card-modern:hover .feature-accent {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Achievement Cards */
+.achievement-card {
+    border: 1px solid rgba(31, 109, 58, 0.1)!important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.achievement-image-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-image-wrapper img {
+    transition: transform 0.3s ease;
+}
+
+.achievement-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(31, 109, 58, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(31, 109, 58, 0.15);
+}
+
+.achievement-card:hover .achievement-image-wrapper img {
+    transform: scale(1.08);
+}
+
+.achievement-card:hover .achievement-overlay {
+    opacity: 1;
+}
+
+.achievement-card .card-title {
+    color: var(--brand-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.achievement-card .card-text {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Contact Cards */
+.contact-card {
+    padding: 30px 24px!important;
+    border: 1px solid rgba(31, 109, 58, 0.15)!important;
+    text-align: center;
+}
+
+.contact-section {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(31, 109, 58, 0.1);
+    transition: all 0.3s ease;
+}
+
+.contact-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.contact-section:hover {
+    transform: translateY(-3px);
+}
+
+.contact-icon-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brand-green), var(--brand-gold));
+    color: white;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.contact-section:hover .contact-icon-large {
+    transform: scale(1.15) rotate(-10deg);
+}
+
+.contact-card h5 {
+    color: var(--brand-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+.contact-card p {
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mvg-card {
+        padding: 24px!important;
+    }
+
+    .president-card {
+        padding: 24px!important;
+    }
+
+    .stat-card-modern {
+        padding: 24px 16px;
+    }
+}

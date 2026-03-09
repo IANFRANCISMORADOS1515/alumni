@@ -1,0 +1,71 @@
+/* Index Page Specific Styles */
+
+/* Alumni Association Section */
+.alumni-assoc-section .content-card {
+    position: relative;
+    border: 1px solid rgba(31, 109, 58, 0.1);
+    padding: 40px!important;
+    border-radius: 16px;
+}
+
+.alumni-assoc-section .content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-green), var(--brand-gold));
+    border-radius: 16px 16px 0 0;
+}
+
+.alumni-assoc-section .section-title {
+    color: var(--brand-dark);
+}
+
+.alumni-assoc-section .image-frame {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(31, 109, 58, 0.2);
+}
+
+.alumni-assoc-section .image-frame img {
+    transition: transform 0.4s ease;
+}
+
+.alumni-assoc-section .image-frame:hover img {
+    transform: scale(1.05);
+}
+
+.alumni-assoc-section .btn {
+    padding: 12px 32px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(31, 109, 58, 0.2);
+}
+
+.alumni-assoc-section .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(31, 109, 58, 0.3);
+}
+
+/* Stats Section Overrides */
+.bg-light .stats-wrap {
+    background: transparent!important;
+    box-shadow: none!important;
+    padding: 0!important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .alumni-assoc-section .content-card,
+    .py-5 > .container > .row > .col-lg-7 > .content-card,
+    .py-5.bg-light > .container > .row > .col-lg-7 > .content-card {
+        padding: 30px!important;
+    }
+
+    .py-5 > .container > .row > .col-12 > .content-card {
+        padding: 30px!important;
+    }
+}
