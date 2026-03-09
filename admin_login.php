@@ -190,31 +190,6 @@ if ($_POST) {
         .hero-section .section-title {
             color: #fff;
         }
-        .return-home {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 9;
-        padding: 2px 5px;
-        font-size: 10px;
-        border-radius: 4px;
-        color: #fff;
-        font-weight: 500;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-        .return-home:hover {
-            text-decoration: none;
-            color: rgba(210, 224, 215, 0.9);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-        }
-        .return-home i {
-            color: inherit;
-        }
         .login-panel .alert-danger {
             color: #0b0b0b;
             font-weight: 500;
@@ -228,7 +203,6 @@ if ($_POST) {
 </head>
 <body>
     <section class="hero-section hero-watermark login-hero">
-            <a href="index.php" class="return-home"><i class="fas fa-home"></i> Home</a>
     <div class="container">
         <div class="container">
             <div class="row align-items-center g-4">
@@ -286,23 +260,7 @@ if ($_POST) {
                                         </button>
                                     </div>
                                 </div>
-                                <p class="helper-text mb-0">Need assistance? Email <strong>admin@sandigan.edu.ph</strong></p>
-                            </form>
-                            <form action="alumni_list.php" method="GET" class="search-bar mt-3">
-                                <label class="form-label mb-2" for="heroSearch">Quick Alumni Search</label>
-                                <div class="input-group">
-                                    <input type="text"
-                                           id="heroSearch"
-                                           name="search"
-                                           class="form-control search-input"
-                                           placeholder="Search alumni, announcements, events..."
-                                           aria-label="Search alumni list"
-                                           required>
-                                    <button type="submit" class="btn btn-outline-success search-btn">
-                                        <i class="fas fa-search me-1"></i>
-                                        Search
-                                    </button>
-                                </div>
+                                <p class="helper-text mb-0">email@sandigan.edu.ph</p>
                             </form>
                         </div>
                     </div>

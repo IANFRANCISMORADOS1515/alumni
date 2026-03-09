@@ -330,14 +330,6 @@ function getDefaultImage($type, $image) {
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-4">Sandigan Colleges Incorporated</h1>
                     <h2 class="h3 mb-4" style="font-weight: 300; letter-spacing: 0.5px;">Explore the Alumni Network of SCI</h2>
-                    <div class="mt-5 pt-2">
-                        <form method="GET" class="search-container" action="">
-                            <input type="text" name="search" class="search-input" placeholder="Search alumni, announcements, events, and photos..." value="">
-                            <button type="submit" style="position: absolute; right: 12px; top: 12px; border: none; background: none; cursor: pointer; color: #1f6d3a; font-size: 1.2rem;">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
