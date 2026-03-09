@@ -7,7 +7,7 @@
     overflow: hidden;
     transition: all 0.3s ease;
 }
-
+   
 .mvg-card::before {
     content: '';
     position: absolute;
