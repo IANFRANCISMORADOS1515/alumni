@@ -209,29 +209,6 @@ function getDefaultImage($type, $image) {
     <div class="container my-5">
         <div class="row">
             <div class="col-12">
-                <ul class="nav nav-pills category-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link <?= $category === 'all' ? 'active' : '' ?>" 
-                           href="?search=<?= urlencode($search) ?>&category=all">All</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $category === 'alumni' ? 'active' : '' ?>" 
-                           href="?search=<?= urlencode($search) ?>&category=alumni"><i class="fas fa-users me-2"></i>Alumni</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $category === 'announcements' ? 'active' : '' ?>" 
-                           href="?search=<?= urlencode($search) ?>&category=announcements"><i class="fas fa-bullhorn me-2"></i>Announcements</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $category === 'events' ? 'active' : '' ?>" 
-                           href="?search=<?= urlencode($search) ?>&category=events"><i class="fas fa-calendar me-2"></i>Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $category === 'photos' ? 'active' : '' ?>" 
-                           href="?search=<?= urlencode($search) ?>&category=photos"><i class="fas fa-images me-2"></i>Photos</a>
-                    </li>
-                </ul>
-                
                 
                 <div class="row mt-5">
                     <?php foreach ($search_results as $result): ?>
