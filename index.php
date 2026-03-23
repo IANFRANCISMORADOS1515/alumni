@@ -26,7 +26,7 @@
                             WHERE LEARNING HAS PURPOSE AND STUDENTS BECOME LEADERS
                         </h2>
                         <p class="muted mb-4 lead-copy">Sandigan Colleges Incorporated Alumni System</p>
-                        <a href="index.php" class="btn btn-success">Apply Now</a>
+                        <a href="#" class="btn btn-success" onclick="openMaintenance(event)">Apply Now</a>
                     </div>
                     <div class="col-lg-5">
                         <div class="image-frame">
@@ -152,4 +152,14 @@
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
 </body>
+<script>
+document.getElementById("applyBtn").addEventListener("click", function(e) {
+    e.preventDefault(); // stop going to index.php
+    document.getElementById("maintenanceModal").style.display = "flex";
+});
+
+function closeMaintenance() {
+    document.getElementById("maintenanceModal").style.display = "none";
+}
+</script>
 </html>
