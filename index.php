@@ -46,14 +46,14 @@
             <div class="row g-4">
                 <div class="col-6 col-lg-3">
                     <div class="stat-item">
-                        <div class="stat-number-large">1913</div>
+                        <div class="stat-number-large">2006</div>
                         <div class="stat-label">Alumni Association Founded</div>
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
                     <div class="stat-item">
                         <div class="stat-number-large">23</div>
-                        <div class="stat-label">Chapters Nationwide</div>
+                        <div class="stat-label">Chapters</div>
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
@@ -62,16 +62,9 @@
                         <div class="stat-label">Philippine Branch</div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3">
-                    <div class="stat-item">
-                        <div class="stat-number-large">10K</div>
-                        <div class="stat-label">Alumni Members</div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
-
     <section class="py-5">
         <div class="container">
             <div class="row g-4 align-items-stretch">
