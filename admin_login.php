@@ -261,6 +261,12 @@ if ($_POST) {
                                     </div>
                                 </div>
                                 <p class="helper-text mb-0">email@sandigan.edu.ph</p>
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-success btn-login">
+                                        <i class="fas fa-sign-in-alt me-1"></i>
+                                        Log In
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
